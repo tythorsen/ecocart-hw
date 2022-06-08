@@ -1,7 +1,8 @@
 <script>
+  import ArtistHero from './app/ArtistHero.svelte';
+
   let artistPromise = null;
   let lastQuery = "";
-  let numberFormatter = new Intl.NumberFormat('en-US');
   let query = "";
 
   async function getArtist() {
@@ -34,11 +35,18 @@
     <p>Searching...</p>
   {:then artist}
     {#if artist}
-      <h1>{artist.name}</h1>
-      <p>{numberFormatter.format(artist.tracker_count)} Followers</p>
-      <p>{numberFormatter.format(artist.upcoming_event_count)} Upcoming {artist.upcoming_event_count == 1 ? "Concert" : "Concerts"}</p>
+      <ArtistHero {artist}/>
     {:else}
       <p>Artist "{lastQuery}" not found</p>
     {/if}
   {/await}
 {/if}
+
+<style>
+  :root {
+    background: #ededed;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+</style>
